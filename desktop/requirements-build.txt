@@ -1,0 +1,3 @@
+# Build-time deps for packaging the desktop .exe.
+# Install on top of backend/requirements.txt in the SAME venv.
+pyinstaller==6.11.1

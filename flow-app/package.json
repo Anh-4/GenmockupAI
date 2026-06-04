@@ -1,0 +1,51 @@
+{
+  "name": "mockup-ai-flow-app",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI mockup generator (Gemini-powered) desktop app",
+  "author": "Vani Ecom",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "electron": "electron .",
+    "dist:win": "npm run build && electron-builder --win portable"
+  },
+  "dependencies": {
+    "@google/genai": "^1.16.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.0.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "autoprefixer": "10.4.20",
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.6.3",
+    "vite": "6.0.7"
+  },
+  "build": {
+    "appId": "com.vani.mockupai",
+    "productName": "MockupAI",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "win": {
+      "target": "portable"
+    },
+    "portable": {
+      "artifactName": "MockupAI-${version}-portable.exe"
+    }
+  }
+}

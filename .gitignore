@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Node / Next
+node_modules/
+.next/
+out/
+.env.local
+.env*.local
+
+# Storage (generated assets) + model weights
+storage/uploads/*
+storage/outputs/*
+!storage/uploads/.gitkeep
+!storage/outputs/.gitkeep
+ai/weights/*
+!ai/weights/.gitkeep
+
+# Build artifacts (PyInstaller + Next export)
+/build/
+/dist/
+frontend/out/
+
+# flow-app build artifacts (Pages builds these in CI; never commit)
+flow-app/dist/
+flow-app/release/
+flow-app/build/
+
+# Misc
+.DS_Store
+*.log
+.idea/
+.vscode/

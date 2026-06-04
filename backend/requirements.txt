@@ -1,0 +1,21 @@
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# Imaging / CV (used by the ai/ package)
+numpy==2.2.1
+opencv-python-headless==4.11.0.86
+pillow==11.1.0
+
+# Tests
+pytest==9.0.3
+httpx==0.28.1          # required by fastapi.testclient
+
+# --- Optional AI stack (uncomment to enable real models) ---------------
+# torch==2.5.1
+# torchvision==0.20.1
+# transformers==4.48.0          # CLIP zero-shot classifier
+# git+https://github.com/facebookresearch/sam2.git   # SAM2 segmentation
