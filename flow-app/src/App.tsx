@@ -32,6 +32,7 @@ const PRODUCT_TYPES = [
   { value: 'hoodie', label: 'Áo Hoodie' },
   { value: 'sweatshirt', label: 'Áo nỉ (Sweatshirt)' },
   { value: 'polo shirt', label: 'Áo Polo' },
+  { value: 'short sleeve button-up shirt', label: 'Áo sơ mi tay ngắn' },
   { value: 'tank top', label: 'Áo ba lỗ' },
   { value: 'jacket', label: 'Áo khoác' },
   { value: 'jogger pants', label: 'Quần Jogger' },

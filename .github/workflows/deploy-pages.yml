@@ -33,6 +33,8 @@ jobs:
       - run: npm install
       - run: npm run build        # vite build → flow-app/dist (KHÔNG nhúng key)
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true        # tự bật Pages nếu chưa bật (khỏi vào Settings)
       - uses: actions/upload-pages-artifact@v3
         with:
           path: flow-app/dist
