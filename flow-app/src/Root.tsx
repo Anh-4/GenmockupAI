@@ -25,6 +25,14 @@ export default function Root() {
         <span className="material-symbols-outlined text-[18px]">key</span>
       </button>
 
+      {/* Version + ngày build — phân biệt bản cũ/mới. */}
+      <div
+        title={`Phiên bản ${__APP_VERSION__} · build ${__BUILD_DATE__}`}
+        className="fixed bottom-1.5 left-2 z-[120] pointer-events-none select-none text-[9px] font-medium tracking-wider text-white/25"
+      >
+        v{__APP_VERSION__} · {__BUILD_DATE__}
+      </div>
+
       <ApiKeyModal
         open={open}
         hasExisting={keySet}

@@ -151,6 +151,7 @@ const generate = {
   async image(args: {
     prompt: string;
     modelDisplayName?: string;
+    model?: string;
     referenceImageMediaIds?: string[];
     aspectRatio?: string;
   }): Promise<GeneratedAsset> {
@@ -163,7 +164,7 @@ const generate = {
     ];
 
     const res: any = await client().models.generateContent({
-      model: IMAGE_MODEL,
+      model: args.model || IMAGE_MODEL,
       contents: [{ role: "user", parts }],
       config: {
         responseModalities: ["IMAGE", "TEXT"],
@@ -189,6 +190,7 @@ const generate = {
   async video(args: {
     prompt: string;
     modelDisplayName?: string;
+    model?: string;
     referenceImageMediaIds?: string[];
     aspectRatio?: string;
     durationSeconds?: number;
@@ -202,7 +204,7 @@ const generate = {
     const seed = firstRefId ? mediaStore.get(firstRefId) : undefined;
 
     const req: any = {
-      model: VIDEO_MODEL,
+      model: args.model || VIDEO_MODEL,
       prompt: args.prompt,
       config: {
         numberOfVideos: 1,

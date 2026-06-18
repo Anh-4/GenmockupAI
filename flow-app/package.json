@@ -1,7 +1,7 @@
 {
   "name": "mockup-ai-flow-app",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "AI mockup generator (Gemini-powered) desktop app",
   "author": "Vani Ecom",

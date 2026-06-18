@@ -93,7 +93,8 @@ export const FieldDropdown: React.FC<{
   options: string[];
   onChange: (val: string) => void;
   className?: string;
-}> = ({ label, value, options, onChange, className = '' }) => {
+  openUp?: boolean;
+}> = ({ label, value, options, onChange, className = '', openUp = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => setIsOpen(false));
@@ -112,7 +113,7 @@ export const FieldDropdown: React.FC<{
         </div>
       </button>
       {isOpen && (
-        <div className="absolute z-50 top-[calc(100%+4px)] left-0 w-full bg-[#1a1a1a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xl animate-dropdown origin-top">
+        <div className={`absolute z-50 left-0 w-full bg-[#1a1a1a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xl animate-dropdown ${openUp ? 'bottom-[calc(100%+4px)] origin-bottom' : 'top-[calc(100%+4px)] origin-top'}`}>
           <div className="max-h-48 overflow-y-auto dark-scrollbar">
             {options.map((opt) => (
               <button

@@ -38,6 +38,19 @@ const PRODUCT_TYPES = [
   { value: 'jogger pants', label: 'Quần Jogger' },
 ];
 
+// Model tiers — xếp từ nhanh/tiết kiệm (trên) đến chất lượng cao (dưới).
+// Mặc định là phần tử [0] = model đang chạy ổn định.
+const IMAGE_MODELS = [
+  { value: 'gemini-2.5-flash-image', label: 'Nano Banana · Nhanh, ổn định' },
+  { value: 'gemini-3.1-flash-image', label: 'Nano Banana 2 · Cân bằng' },
+  { value: 'gemini-3-pro-image', label: 'Nano Banana Pro · Chất lượng cao' },
+];
+const VIDEO_MODELS = [
+  { value: 'veo-3.0-fast-generate-001', label: 'Veo 3 Fast · Nhanh, tiết kiệm' },
+  { value: 'veo-3.1-lite-generate-preview', label: 'Veo 3.1 Lite · Cân bằng' },
+  { value: 'veo-3.1-generate-preview', label: 'Veo 3.1 · Chất lượng cao' },
+];
+
 const SCENE_PRESETS: ScenePreset[] = [
   {
     id: 'studio_male',
@@ -92,6 +105,8 @@ export default function App() {
   const [aspectRatio, setAspectRatio] = useState<'1:1' | '9:16' | '16:9' | '4:3'>('1:1');
   const [mediaType, setMediaType] = useState<'image' | 'video'>('image');
   const [videoDuration, setVideoDuration] = useState(10);
+  const [imageModel, setImageModel] = useState(IMAGE_MODELS[0].value);
+  const [videoModel, setVideoModel] = useState(VIDEO_MODELS[0].value);
 
   const [singleResult, setSingleResult] = useState<MediaAsset | null>(null);
   const [batchResults, setBatchResults] = useState<MediaAsset[]>([]);
@@ -230,7 +245,7 @@ export default function App() {
       // Sử dụng Omni Flash làm mặc định
       const response = await Flow.generate.video({
         prompt: videoPrompt,
-        modelDisplayName: 'Omni Flash',
+        model: videoModel,
         referenceImageMediaIds: currentRefs,
         // Nếu chọn 1:1 mà model chưa hỗ trợ, SDK có thể tự điều chỉnh hoặc báo lỗi tùy thuộc vào server-side
         aspectRatio: aspectRatio as any,
@@ -253,7 +268,7 @@ export default function App() {
 
       const response = await Flow.generate.image({
         prompt: imagePrompt,
-        modelDisplayName: '🍌 Nano Banana Pro',
+        model: imageModel,
         referenceImageMediaIds: currentRefs,
         aspectRatio: aspectRatio as any,
       });
@@ -338,6 +353,13 @@ export default function App() {
       setSaveStates(prev => ({ ...prev, [asset.mediaId]: 'idle' }));
     }
   };
+
+  // Model đang chọn theo chế độ Ảnh/Video.
+  const activeModels = mediaType === 'video' ? VIDEO_MODELS : IMAGE_MODELS;
+  const activeModelValue = mediaType === 'video' ? videoModel : imageModel;
+  const activeModelLabel = activeModels.find(m => m.value === activeModelValue)?.label || activeModels[0].label;
+  const setActiveModel = (value: string) =>
+    mediaType === 'video' ? setVideoModel(value) : setImageModel(value);
 
   return (
     <div className="flex h-screen w-screen bg-[#0e0e0e]">
@@ -638,7 +660,7 @@ export default function App() {
           <div className="flex flex-col gap-3">
             <SectionLabel>Thông số Mockup</SectionLabel>
             <FieldDisplay label="Sản phẩm hiện tại" value={PRODUCT_TYPES.find(t => t.value === garmentType)?.label || 'Chưa xác định'} />
-            <FieldDisplay label="Chất lượng" value={mediaType === 'video' ? 'Omni Flash HD' : 'Ultra HD 8K'} />
+            <FieldDisplay label="Model đang dùng" value={activeModelLabel} />
           </div>
 
           {error && (
@@ -650,6 +672,22 @@ export default function App() {
         </div>
 
         <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
+          <div className="flex flex-col gap-1.5">
+            <p className="text-[10px] text-white/30 uppercase tracking-widest pl-2">
+              Model {mediaType === 'video' ? 'Video' : 'Ảnh'}
+            </p>
+            <FieldDropdown
+              label=""
+              openUp
+              value={activeModelLabel}
+              options={activeModels.map(m => m.label)}
+              onChange={(label) => {
+                const m = activeModels.find(x => x.label === label);
+                if (m) setActiveModel(m.value);
+              }}
+            />
+          </div>
+
           <PillButton
             variant="solid"
             onClick={handleGenerateBatch}
